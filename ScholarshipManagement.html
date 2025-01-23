@@ -1,278 +1,554 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title>Scholarship Management</title>
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="main.css" />
     <!-- <script src="./node_modules/web3/dist/web3.min.js">
     </script> -->
     <script src="https://cdn.jsdelivr.net/npm/web3@1.10.4/dist/web3.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
-    </style>    
-</head>
+      @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+    </style>
+  </head>
 
-<body>
+  <body>
     <div class="status" id="status">กำลังโหลด...</div>
     <h1>Scholarship Management</h1>
     <div class="container">
-        <!-- Navigation buttons -->
-        <div class="nav">
-            <button class="nav-btn active" style="font-family: 'Itim', cursive;" onclick="showPage('transactions', event)">Add Transaction</button>
-            <button class="nav-btn" style="font-family: 'Itim', cursive;" onclick="showPage('list', event)">Scholarship Recipients List</button>
-        </div>
-    
-        <!-- Transactions Page -->
-        <div id="transactions" class="page active form-container">
-            <form action="/submit" method="post">
-                <h2>Scholarship Transaction</h2>
-    
-                <label for="recipient_id">Recipient ID :</label>
-                <input type="text" id="recipient_id" name="recipient_id" style="font-family: 'Itim', cursive;" required>
-    
-                <label for="recipient_name">Recipient Name :</label>
-                <input type="text" id="recipient_name" name="recipient_name" style="font-family: 'Itim', cursive;" required>
-    
-                <label for="grant_name">Grant Name :</label>
-                <select id="grant_name" name="grant_name" style="font-family: 'Itim', cursive;" required>
-                    <option value="pending">Excellence in Education Scholarship (ทุนความเป็นเลิศทางการศึกษา)</option>
-                    <option value="approved">Future Leaders Grant (ทุนผู้นำแห่งอนาคต)</option>
-                    <option value="rejected">STEM Innovation Scholarship (ทุนนวัตกรรมด้าน STEM)</option>
-                    <option value="approved">Global Opportunity Scholarship (ทุนโอกาสระดับโลก)</option>
-                    <option value="rejected">Community Impact Award (ทุนเพื่อการพัฒนาสังคม)</option>
-                </select>
-    
-                <label for="grant_amount">Grant Amount :</label>
-                <input type="number" id="grant_amount" name="grant_amount" style="font-family: 'Itim', cursive;" required>
-    
-                <label for="grant_date">Grant Date :</label>
-                <input type="date" id="grant_date" name="grant_date" style="font-family: 'Itim', cursive;" required>
-    
-                <label for="approver">Approver :</label>
-                <input type="text" id="approver" name="approver" style="font-family: 'Itim', cursive;" required>
-    
-                <label for="status">Status :</label>
-                <select id="status" name="status" style="font-family: 'Itim', cursive;" required>
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="rejected">Rejected</option>
-                </select>
-    
-                <button type="submit" style="font-family: 'Itim', cursive;">Submit</button>
-            </form>  
-        </div>
+      <!-- Navigation buttons -->
+      <div class="nav">
+        <button
+          class="nav-btn active"
+          style="font-family: 'Itim', cursive"
+          onclick="showPage('transactions', event)"
+        >
+          Add Transaction
+        </button>
+        <button
+          id="listScholarship"
+          class="nav-btn"
+          style="font-family: 'Itim', cursive"
+          onclick="showPage('list', event)"
+        >
+          Scholarship Recipients List
+        </button>
+      </div>
 
-        <!-- Recipients List Page -->
-        <div id="list" class="page">
-            <h2>Scholarship Recipients List</h2>
-            <div class="list-grid"></div>
-        </div>
+      <!-- Transactions Page -->
+      <div id="transactions" class="page active form-container">
+        <form>
+          <h2>Scholarship Transaction</h2>
+
+          <label for="recipient_id">Recipient ID :</label>
+          <input
+            type="text"
+            id="recipient_id"
+            name="recipient_id"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="recipient_name">Recipient Name :</label>
+          <input
+            type="text"
+            id="recipient_name"
+            name="recipient_name"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="grant_name">Grant Name :</label>
+          <select
+            id="grant_name"
+            name="grant_name"
+            style="font-family: 'Itim', cursive"
+            required
+          >
+            <option value="pending">
+              Excellence in Education Scholarship (ทุนความเป็นเลิศทางการศึกษา)
+            </option>
+            <option value="approved">
+              Future Leaders Grant (ทุนผู้นำแห่งอนาคต)
+            </option>
+            <option value="rejected">
+              STEM Innovation Scholarship (ทุนนวัตกรรมด้าน STEM)
+            </option>
+            <option value="approved">
+              Global Opportunity Scholarship (ทุนโอกาสระดับโลก)
+            </option>
+            <option value="rejected">
+              Community Impact Award (ทุนเพื่อการพัฒนาสังคม)
+            </option>
+          </select>
+
+          <label for="grant_amount">Grant Amount :</label>
+          <input
+            type="number"
+            id="grant_amount"
+            name="grant_amount"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="grant_date">Grant Date :</label>
+          <input
+            type="date"
+            id="grant_date"
+            name="grant_date"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="approver">Approver :</label>
+          <input
+            type="text"
+            id="approver"
+            name="approver"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="status">Status :</label>
+          <select
+            id="status"
+            name="status"
+            style="font-family: 'Itim', cursive"
+            required
+          >
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+            <option value="rejected">Rejected</option>
+          </select>
+
+          <button
+            id="btnsubmitTransaction"
+            type="submit"
+            style="font-family: 'Itim', cursive"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+
+      <!-- Recipients List Page -->
+      <div id="list" class="page">
+        <h2>Scholarship Recipients List</h2>
+        <div class="list-grid"></div>
+      </div>
     </div>
-    
 
     <script>
-        // Show specific page by its ID
-        function showPage(pageId, event) {
-            // Hide all pages
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            // Show selected page
-            document.getElementById(pageId).classList.add('active');
-            
-            // Update navigation button styles
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Mark current navigation button as active
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
-            
-            // Save active page to localStorage
-            localStorage.setItem('activePage', pageId);
+      // Show specific page by its ID
+      function showPage(pageId, event) {
+        // Hide all pages
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.remove("active");
+        });
+
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
+
+        // Update navigation button styles
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+
+        // Mark current navigation button as active
+        if (event && event.target) {
+          event.target.classList.add("active");
         }
 
-        // Handling page load and showing the default active page
-        window.onload = () => {
-            const activePage = localStorage.getItem('activePage') || 'formPage';
-            showPage(activePage);
-        };
+        // Save active page to localStorage
+        localStorage.setItem("activePage", pageId);
+      }
 
-        // Save active page to localStorage to maintain it on reload
-        function handlePageChange(pageId) {
-            localStorage.setItem('activePage', pageId);
-        }
+      // Handling page load and showing the default active page
+      window.onload = () => {
+        const activePage = localStorage.getItem("activePage") || "formPage";
+        showPage(activePage);
+      };
+
+      // Save active page to localStorage to maintain it on reload
+      function handlePageChange(pageId) {
+        localStorage.setItem("activePage", pageId);
+      }
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
     <script>
-        
-        // ===Connecting to MetaMask===
-        function loadWeb3() {
-            if (window.ethereum) {
-                // To get web3(.js) object
-                web3 = new Web3(window.ethereum)
-                
-                // To request user's account from Metamask
-                ethereum
-                    .request({ method: 'eth_requestAccounts' })           
-                    .then(handleAccountsChanged)
-                    .catch((err) => {
-                        if (err.code === 4001) {
-                            // If this happens, the user rejected the connection request.
-                            console.log('Please connect to MetaMask.');
-                        } else {
-                            console.error(err);
-                        }
-                    });
-            }
-        }
-        
-        // ===Handle user accounts and accountsChanged===
-        let currentAccount = null;
-        
-        // Note that this event is emitted on page load.
-        // If the array of accounts is non-empty, you're already connected.
-        window.ethereum.on('accountsChanged', handleAccountsChanged);
+      // ===Connecting to MetaMask===
+      function loadWeb3() {
+        if (window.ethereum) {
+          // To get web3(.js) object
+          web3 = new Web3(window.ethereum);
 
-        // For now, 'eth_accounts' will continue to always return an array
-        function handleAccountsChanged(accounts) {
-            if (accounts.length === 0) {
-                // MetaMask is locked or the user has not connected any accounts
-                console.log('Please connect to MetaMask.');
-            } else if (accounts[0] !== currentAccount) {
-                currentAccount = accounts[0];
-            }
-        }
-
-
-
-
-        let abi = [
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "text",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "bytes32",
-				"name": "hash",
-				"type": "bytes32"
-			}
-		],
-		"name": "NameAdded",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "text",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "reason",
-				"type": "string"
-			}
-		],
-		"name": "RegistrationError",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			}
-		],
-		"name": "checkName",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "name",
-				"type": "string"
-			}
-		],
-		"name": "registration",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	}
-];
-        
-
-
-        //***std***
-        async function loadContract() {
-            return await new web3.eth.Contract(abi, 'xxx');
-        }
-
-        async function load() {
-            await loadWeb3();
-            web3.contract = await loadContract();
-            updateStatus('Ready!');
-        }
-        
-        function updateStatus(status) {
-            const statusEl = document.getElementById('status');
-            statusEl.innerHTML = status;
-            console.log(status);
-        }
-
-        $("#btnRegistration").click(function() {
-            console.log(currentAccount);
-            web3.contract.methods.registration($("#document1").val())
-                .send({from: currentAccount}, function(error, result){
-                $("#result").html(result);
+          // To request user's account from Metamask
+          ethereum
+            .request({ method: "eth_requestAccounts" })
+            .then(handleAccountsChanged)
+            .catch((err) => {
+              if (err.code === 4001) {
+                // If this happens, the user rejected the connection request.
+                console.log("Please connect to MetaMask.");
+              } else {
+                console.error(err);
+              }
             });
-        });
+        }
+      }
 
-        $("#btnCheck").click(function() {
-            web3.contract.methods.checkName($("#document2").val()).call(function(error, result){
-                if(!error) {
-                    $("#result").html(result.toString());
-                } else
-                    console.error(error);
-            });     
-        });
+      // ===Handle user accounts and accountsChanged===
+      let currentAccount = null;
 
-        load();
+      // Note that this event is emitted on page load.
+      // If the array of accounts is non-empty, you're already connected.
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+
+      // For now, 'eth_accounts' will continue to always return an array
+      function handleAccountsChanged(accounts) {
+        if (accounts.length === 0) {
+          // MetaMask is locked or the user has not connected any accounts
+          console.log("Please connect to MetaMask.");
+        } else if (accounts[0] !== currentAccount) {
+          currentAccount = accounts[0];
+        }
+      }
+
+      let abi = [
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_recipientId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "_recipient",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "_grantName",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "_grantAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "_grantDate",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_approver",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "_status",
+              type: "string",
+            },
+          ],
+          name: "addScholarship",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "student",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "bytes32",
+              name: "proof",
+              type: "bytes32",
+            },
+          ],
+          name: "NameAdded",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "registration",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "reason",
+              type: "string",
+            },
+          ],
+          name: "RegistrationError",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "uint256",
+              name: "recipientId",
+              type: "uint256",
+            },
+            {
+              indexed: true,
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "grantName",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "grantAmount",
+              type: "uint256",
+            },
+          ],
+          name: "ScholarshipAdded",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: false,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "reason",
+              type: "string",
+            },
+          ],
+          name: "ScholarshipError",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "name",
+              type: "string",
+            },
+          ],
+          name: "checkName",
+          outputs: [
+            {
+              internalType: "bool",
+              name: "",
+              type: "bool",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "_recipientId",
+              type: "uint256",
+            },
+          ],
+          name: "getScholarship",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "uint256",
+                  name: "recipientId",
+                  type: "uint256",
+                },
+                {
+                  internalType: "address",
+                  name: "recipient",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "grantName",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "grantAmount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "grantDate",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "approver",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "status",
+                  type: "string",
+                },
+              ],
+              internalType: "struct ScholarshipManagement.Manage",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTotalScholarships",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "scholarships",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "recipientId",
+              type: "uint256",
+            },
+            {
+              internalType: "address",
+              name: "recipient",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "grantName",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "grantAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "grantDate",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "approver",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "status",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ];
+
+      //***std***
+      async function loadContract() {
+        return await new web3.eth.Contract(
+          abi,
+          "0xE995e33Df90fcD3DBc007f7ABF4d19bC804742D4"
+        );
+      }
+
+      async function load() {
+        await loadWeb3();
+        web3.contract = await loadContract();
+        updateStatus("Ready!");
+      }
+
+      function updateStatus(status) {
+        const statusEl = document.getElementById("status");
+        statusEl.innerHTML = status;
+        console.log(status);
+      }
+
+      $("#btnsubmitTransaction").click(function () {
+        console.log(currentAccount);
+        web3.contract.methods.addScholarship($("#transactions").val());
+        /* .send({ from: currentAccount }, function (error, result) {
+            $("#result").html(result);
+          }); */
+      });
+
+      $("#listScholarship").click(function () {
+        web3.contract.methods
+          .getTotalScholarships($("#list").val())
+          .call(function (error, result) {
+            if (!error) {
+              $("#result").html(result.toString());
+            } else console.error(error);
+          });
+      });
+
+      load();
     </script>
-</body>
+  </body>
 </html>
