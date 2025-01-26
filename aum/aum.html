@@ -13,13 +13,14 @@
 
   <body>
     <!-- <div class="status" id="status">กำลังโหลด...</div> -->
-    <h1>Scholarship Management</h1>
+    <h1 style="margin-top: 0px;">Scholarship Management</h1>
+  
     <div class="container">
       <!-- Navigation buttons -->
       <div class="nav">
         <button
           class="nav-btn active"
-          style="font-family: 'Itim', cursive"
+          style="font-family: 'Itim', cursive; font-size: 16px;"
           onclick="showPage('transactions', event)"
         >
           Add Transaction
@@ -27,7 +28,7 @@
         <button
           id="listScholarship"
           class="nav-btn"
-          style="font-family: 'Itim', cursive"
+          style="font-family: 'Itim', cursive; font-size: 16px;"
           onclick="showPage('list', event)"
         >
           Scholarship Recipients List
@@ -37,7 +38,7 @@
       <!-- Transactions Page -->
       <div id="transactions" class="page active form-container">
         <form onsubmit="return false;">
-          <h2>Scholarship Transaction</h2>
+          <h2 style="margin-top: 5px;">Scholarship Transaction</h2>
 
           <label for="recipientId">Recipient ID :</label>
           <input
@@ -122,11 +123,7 @@
             <option value="Rejected">Rejected</option>
           </select>
 
-          <button
-            type="submit"
-            id="btnsubmitTransaction"
-            style="font-family: 'Itim', cursive"
-          >
+          <button type="submit" id="btnsubmitTransaction">
             Submit
           </button>
         </form>
@@ -135,6 +132,18 @@
       <!-- Recipients List Page -->
       <div id="list" class="page">
         <h2>Scholarship Recipients List</h2>
+        <div style="display: flex;">
+          <label for="searchRecipientId" style="font-size: 16px; font-weight: normal;">Recipient ID:</label>
+          <input
+            type="text"
+            id="searchRecipientId"
+            placeholder="Enter Recipient ID"
+            style="font-family: 'Itim', cursive"
+          />
+          <button id="searchBtn">
+            Search
+          </button>
+        </div>
         <div class="list-grid"></div>
         <table>
           <thead>
@@ -154,18 +163,7 @@
         </table>
       </div>
     </div>
-    <div>
-      <label for="searchRecipientId">Search by Recipient ID:</label>
-      <input
-        type="text"
-        id="searchRecipientId"
-        placeholder="Enter Recipient ID"
-        style="font-family: 'Itim', cursive"
-      />
-      <button id="searchBtn" style="font-family: 'Itim', cursive">
-        Search
-      </button>
-    </div>
+    
 
     <script>
       // Show specific page by its ID
