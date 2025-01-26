@@ -1,214 +1,265 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <title>Scholarship Management</title>
-  <link rel="stylesheet" type="text/css" href="main.css" />
-  <!-- <script src="./node_modules/web3/dist/web3.min.js">
+  <head>
+    <title>Scholarship Management</title>
+    <link rel="stylesheet" type="text/css" href="main.css" />
+    <!-- <script src="./node_modules/web3/dist/web3.min.js">
     </script> -->
-  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.4/dist/web3.min.js"></script>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
-  </style>
-</head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.10.4/dist/web3.min.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Itim&display=swap");
+    </style>
+  </head>
 
-<body>
-  <!-- <div class="status" id="status">กำลังโหลด...</div> -->
-  <h1 style="margin-top: 0px;">Scholarship Management</h1>
+  <body>
+    <!-- <div class="status" id="status">กำลังโหลด...</div> -->
+    <h1 style="margin-top: 0px">Scholarship Management</h1>
 
-  <div class="container">
-    <!-- Navigation buttons -->
-    <div class="nav">
-      <button class="nav-btn active" style="font-family: 'Itim', cursive; font-size: 16px;"
-        onclick="showPage('transactions', event)">
-        Add Transaction
-      </button>
-      <button id="listScholarship" class="nav-btn" style="font-family: 'Itim', cursive; font-size: 16px;"
-        onclick="showPage('list', event)">
-        Scholarship Recipients List
-      </button>
-    </div>
-
-    <!-- Transactions Page -->
-    <div id="transactions" class="page active form-container">
-      <form onsubmit="return false;">
-        <h2 style="margin-top: 5px;">Scholarship Transaction</h2>
-
-        <label for="recipientId">Recipient ID :</label>
-        <input type="text" id="recipientId" name="recipientId" style="font-family: 'Itim', cursive" required />
-
-        <label for="recipientName">Recipient Name :</label>
-        <input type="text" id="recipientName" name="recipientName" style="font-family: 'Itim', cursive" required />
-
-        <label for="grantName">Grant Name :</label>
-        <select id="grantName" name="grantName" style="font-family: 'Itim', cursive" required>
-          <option value="Excellence in Education Scholarship (ทุนความเป็นเลิศทางการศึกษา)">
-            Excellence in Education Scholarship (ทุนความเป็นเลิศทางการศึกษา)
-          </option>
-          <option value="Future Leaders Grant (ทุนผู้นำแห่งอนาคต)">
-            Future Leaders Grant (ทุนผู้นำแห่งอนาคต)
-          </option>
-          <option value="STEM Innovation Scholarship (ทุนนวัตกรรมด้าน STEM)">
-            STEM Innovation Scholarship (ทุนนวัตกรรมด้าน STEM)
-          </option>
-          <option value="Global Opportunity Scholarship (ทุนโอกาสระดับโลก)">
-            Global Opportunity Scholarship (ทุนโอกาสระดับโลก)
-          </option>
-          <option value="Community Impact Award (ทุนเพื่อการพัฒนาสังคม)">
-            Community Impact Award (ทุนเพื่อการพัฒนาสังคม)
-          </option>
-        </select>
-
-        <label for="grantAmount">Grant Amount :</label>
-        <input type="number" id="grantAmount" name="grantAmount" style="font-family: 'Itim', cursive" required />
-
-        <label for="grantDate">Grant Date :</label>
-        <input type="date" id="grantDate" name="grantDate" style="font-family: 'Itim', cursive" required />
-
-        <label for="approver">Approver :</label>
-        <input type="text" id="approver" name="approver" style="font-family: 'Itim', cursive" required />
-
-        <label for="Status">Status :</label>
-        <select id="Status" name="Status" style="font-family: 'Itim', cursive" required>
-          <option value="Pending">Pending</option>
-          <option value="Approved">Approved</option>
-          <option value="Rejected">Rejected</option>
-        </select>
-
-        <button type="submit" id="btnsubmitTransaction">
-          Submit
+    <div class="container">
+      <!-- Navigation buttons -->
+      <div class="nav">
+        <button
+          class="nav-btn active"
+          style="font-family: 'Itim', cursive; font-size: 16px"
+          onclick="showPage('transactions', event)"
+        >
+          Add Transaction
         </button>
-      </form>
-    </div>
-
-    <!-- Recipients List Page -->
-    <div id="list" class="page">
-      <h2>Scholarship Recipients List</h2>
-      <div style="display: flex;">
-        <label for="searchRecipientId" style="font-size: 16px; font-weight: normal;">Recipient ID:</label>
-        <input type="text" id="searchRecipientId" placeholder="Enter Recipient ID"
-          style="font-family: 'Itim', cursive" />
-        <button id="searchBtn">
-          Search
+        <button
+          id="listScholarship"
+          class="nav-btn"
+          style="font-family: 'Itim', cursive; font-size: 16px"
+          onclick="showPage('list', event)"
+        >
+          Scholarship Recipients List
         </button>
       </div>
-      <div class="list-grid"></div>
-      <table>
-        <thead>
-          <tr>
-            <th>Recipient ID</th>
-            <th>Recipient Name</th>
-            <th>Grant Name</th>
-            <th>Grant Amount</th>
-            <th>Grant Date</th>
-            <th>Approver</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="reservationsBody">
-          <!-- ตารางข้อมูลทุนการศึกษาจะถูกแสดงที่นี่ -->
-        </tbody>
-      </table>
+
+      <!-- Transactions Page -->
+      <div id="transactions" class="page active form-container">
+        <form onsubmit="return false;">
+          <h2 style="margin-top: 5px">Scholarship Transaction</h2>
+
+          <label for="recipientId">Recipient ID :</label>
+          <input
+            type="text"
+            id="recipientId"
+            name="recipientId"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="recipientName">Recipient Name :</label>
+          <input
+            type="text"
+            id="recipientName"
+            name="recipientName"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="grantName">Grant Name :</label>
+          <select
+            id="grantName"
+            name="grantName"
+            style="font-family: 'Itim', cursive"
+            required
+          >
+            <option
+              value="Excellence in Education Scholarship (ทุนความเป็นเลิศทางการศึกษา)"
+            >
+              Excellence in Education Scholarship (ทุนความเป็นเลิศทางการศึกษา)
+            </option>
+            <option value="Future Leaders Grant (ทุนผู้นำแห่งอนาคต)">
+              Future Leaders Grant (ทุนผู้นำแห่งอนาคต)
+            </option>
+            <option value="STEM Innovation Scholarship (ทุนนวัตกรรมด้าน STEM)">
+              STEM Innovation Scholarship (ทุนนวัตกรรมด้าน STEM)
+            </option>
+            <option value="Global Opportunity Scholarship (ทุนโอกาสระดับโลก)">
+              Global Opportunity Scholarship (ทุนโอกาสระดับโลก)
+            </option>
+            <option value="Community Impact Award (ทุนเพื่อการพัฒนาสังคม)">
+              Community Impact Award (ทุนเพื่อการพัฒนาสังคม)
+            </option>
+          </select>
+
+          <label for="grantAmount">Grant Amount :</label>
+          <input
+            type="number"
+            id="grantAmount"
+            name="grantAmount"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="grantDate">Grant Date :</label>
+          <input
+            type="date"
+            id="grantDate"
+            name="grantDate"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="approver">Approver :</label>
+          <input
+            type="text"
+            id="approver"
+            name="approver"
+            style="font-family: 'Itim', cursive"
+            required
+          />
+
+          <label for="Status">Status :</label>
+          <select
+            id="Status"
+            name="Status"
+            style="font-family: 'Itim', cursive"
+            required
+          >
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+
+          <button type="submit" id="btnsubmitTransaction">Submit</button>
+        </form>
+      </div>
+
+      <!-- Recipients List Page -->
+      <div id="list" class="page">
+        <h2>Scholarship Recipients List</h2>
+        <div style="display: flex">
+          <label
+            for="searchRecipientId"
+            style="font-size: 16px; font-weight: normal"
+            >Recipient ID:</label
+          >
+          <input
+            type="text"
+            id="searchRecipientId"
+            placeholder="Enter Recipient ID"
+            style="font-family: 'Itim', cursive"
+          />
+          <button id="searchBtn">Search</button>
+        </div>
+        <div class="list-grid"></div>
+        <table>
+          <thead>
+            <tr>
+              <th>Recipient ID</th>
+              <th>Recipient Name</th>
+              <th>Grant Name</th>
+              <th>Grant Amount</th>
+              <th>Grant Date</th>
+              <th>Approver</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="reservationsBody">
+            <!-- ตารางข้อมูลทุนการศึกษาจะถูกแสดงที่นี่ -->
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
 
-
-  <script>
-    // Show specific page by its ID
-    function showPage(pageId, event) {
-      // Hide all pages
-      document.querySelectorAll(".page").forEach((page) => {
-        page.classList.remove("active");
-      });
-
-      // Show selected page
-      document.getElementById(pageId).classList.add("active");
-
-      // Update navigation button styles
-      document.querySelectorAll(".nav-btn").forEach((btn) => {
-        btn.classList.remove("active");
-      });
-
-      document
-        .getElementById("btnsubmitTransaction")
-        .addEventListener("click", function (event) {
-          event.preventDefault();
-          // เพิ่มฟังก์ชันจัดการข้อมูลที่นี่ เช่น ส่งค่าผ่าน API
-          window.location.reload();
-          //console.log("Form submitted without reloading.");
+    <script>
+      // Show specific page by its ID
+      function showPage(pageId, event) {
+        // Hide all pages
+        document.querySelectorAll(".page").forEach((page) => {
+          page.classList.remove("active");
         });
 
-      document.getElementById("listScholarship");
-      document.getElementById("searchBtn");
-      /* .addEventListener("click", listScholarships) */
+        // Show selected page
+        document.getElementById(pageId).classList.add("active");
 
-      // Mark current navigation button as active
-      if (event && event.target) {
-        event.target.classList.add("active");
-      }
+        // Update navigation button styles
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
 
-      // Save active page to localStorage
-      localStorage.setItem("activePage", pageId);
-    }
-
-    // Handling page load and showing the default active page
-    window.onload = () => {
-      const activePage = localStorage.getItem("activePage") || "formPage";
-      showPage(activePage);
-    };
-
-    // Save active page to localStorage to maintain it on reload
-    function handlePageChange(pageId) {
-      localStorage.setItem("activePage", pageId);
-    }
-  </script>
-
-  <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
-  <script>
-    // ===Connecting to MetaMask===
-    function loadWeb3() {
-      if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-
-        ethereum
-          .request({ method: "eth_requestAccounts" })
-          .then((accounts) => {
-            if (accounts.length > 0) {
-              currentAccount = accounts[0];
-              console.log("Connected account:", currentAccount);
-            } else {
-              console.log("No accounts found.");
-            }
-          })
-          .catch((err) => {
-            console.error("MetaMask connection error:", err);
+        document
+          .getElementById("btnsubmitTransaction")
+          .addEventListener("click", function (event) {
+            event.preventDefault();
+            // เพิ่มฟังก์ชันจัดการข้อมูลที่นี่ เช่น ส่งค่าผ่าน API
+            window.location.reload();
+            //console.log("Form submitted without reloading.");
           });
-      } else {
-        console.log("MetaMask not installed.");
+
+        document.getElementById("listScholarship");
+        document.getElementById("searchBtn");
+        /* .addEventListener("click", listScholarships) */
+
+        // Mark current navigation button as active
+        if (event && event.target) {
+          event.target.classList.add("active");
+        }
+
+        // Save active page to localStorage
+        localStorage.setItem("activePage", pageId);
       }
-    }
 
-    // ===Handle user accounts and accountsChanged===
-    let currentAccount = null;
+      // Handling page load and showing the default active page
+      window.onload = () => {
+        const activePage = localStorage.getItem("activePage") || "formPage";
+        showPage(activePage);
+      };
 
-    // Note that this event is emitted on page load.
-    // If the array of accounts is non-empty, you're already connected.
-    window.ethereum.on("accountsChanged", handleAccountsChanged);
-
-    // For now, 'eth_accounts' will continue to always return an array
-    function handleAccountsChanged(accounts) {
-      if (!accounts || accounts.length === 0) {
-        console.log("Please connect to MetaMask.");
-      } else if (accounts[0] !== currentAccount) {
-        currentAccount = accounts[0];
-        console.log("Connected account:", currentAccount);
+      // Save active page to localStorage to maintain it on reload
+      function handlePageChange(pageId) {
+        localStorage.setItem("activePage", pageId);
       }
-    }
+    </script>
 
-    //***std***
-    let contract = null;
-    const contractAddress = "0x84fe234Af6b3cCDc4074B316dB8967D3a006c6fa"; // ใส่ Contract Address ที่คุณต้องการ
-    const abi = [
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+    <script>
+      // ===Connecting to MetaMask===
+      function loadWeb3() {
+        if (window.ethereum) {
+          web3 = new Web3(window.ethereum);
+
+          ethereum
+            .request({ method: "eth_requestAccounts" })
+            .then((accounts) => {
+              if (accounts.length > 0) {
+                currentAccount = accounts[0];
+                console.log("Connected account:", currentAccount);
+              } else {
+                console.log("No accounts found.");
+              }
+            })
+            .catch((err) => {
+              console.error("MetaMask connection error:", err);
+            });
+        } else {
+          console.log("MetaMask not installed.");
+        }
+      }
+
+      // ===Handle user accounts and accountsChanged===
+      let currentAccount = null;
+
+      // Note that this event is emitted on page load.
+      // If the array of accounts is non-empty, you're already connected.
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
+
+      // For now, 'eth_accounts' will continue to always return an array
+      function handleAccountsChanged(accounts) {
+        if (!accounts || accounts.length === 0) {
+          console.log("Please connect to MetaMask.");
+        } else if (accounts[0] !== currentAccount) {
+          currentAccount = accounts[0];
+          console.log("Connected account:", currentAccount);
+        }
+      }
+
+      //***std***
+      let contract = null;
+      const contractAddress = "0x84fe234Af6b3cCDc4074B316dB8967D3a006c6fa"; // ใส่ Contract Address ที่คุณต้องการ
+      const abi = [
 	{
 		"inputs": [
 			{
@@ -601,184 +652,183 @@
 	}
 ];
 
-    function loadContract() {
-      if (web3) {
-        contract = new web3.eth.Contract(abi, contractAddress);
-        console.log("Contract loaded:", contract);
-      } else {
-        console.error("Web3 is not initialized.");
-      }
-    }
-
-    async function load() {
-      await loadWeb3();
-      web3.contract = await loadContract();
-      updateStatus("Ready!");
-    }
-
-    function updateStatus(state) {
-      const statusEl = document.getElementById("state");
-      statusEl.innerHTML = state;
-      console.log(state);
-    }
-
-    // Event ของปุ่ม Submit
-    $("#btnsubmitTransaction").click(async function () {
-      if (!currentAccount) {
-        updateStatus("กรุณาเชื่อมต่อกระเป๋าเงินก่อน");
-        return;
+      function loadContract() {
+        if (web3) {
+          contract = new web3.eth.Contract(abi, contractAddress);
+          console.log("Contract loaded:", contract);
+        } else {
+          console.error("Web3 is not initialized.");
+        }
       }
 
-      const recipientId = $("#recipientId").val();
-      const recipientName = $("#recipientName").val();
-      const grantName = $("#grantName").val();
-      const grantAmount = $("#grantAmount").val();
-      const grantDate = $("#grantDate").val();
-      const approver = $("#approver").val();
-      const state = $("#Status").val();
+      async function load() {
+        await loadWeb3();
+        web3.contract = await loadContract();
+        updateStatus("Ready!");
+      }
 
-      try {
+      function updateStatus(state) {
+        const statusEl = document.getElementById("state");
+        statusEl.innerHTML = state;
+        console.log(state);
+      }
+
+      // Event ของปุ่ม Submit
+      $("#btnsubmitTransaction").click(async function () {
+        if (!currentAccount) {
+          updateStatus("กรุณาเชื่อมต่อกระเป๋าเงินก่อน");
+          return;
+        }
+
+        const recipientId = $("#recipientId").val();
+        const recipientName = $("#recipientName").val();
+        const grantName = $("#grantName").val();
+        const grantAmount = $("#grantAmount").val();
+        const grantDate = $("#grantDate").val();
+        const approver = $("#approver").val();
+        const state = $("#Status").val();
+
+        try {
+          const contract = new web3.eth.Contract(abi, contractAddress);
+          const price = "0.000001";
+          const priceInWei = web3.utils.toWei(price, "ether");
+          await contract.methods
+            .addScholarship(
+              recipientId,
+              recipientName,
+              grantName,
+              grantAmount,
+              grantDate,
+              approver,
+              state
+            )
+            .send({ from: currentAccount, value: priceInWei });
+          alert("Transaction successful!");
+        } catch (error) {
+          console.error("Error submitting transaction:", error);
+          alert("Transaction failed.");
+        }
+      });
+
+      $("#listScholarship").click(function () {
+        // สร้าง Web3 instance และเชื่อมต่อกับ Ethereum node
+        const web3 = new Web3(window.ethereum);
         const contract = new web3.eth.Contract(abi, contractAddress);
-        const price = "0.000001";
-        const priceInWei = web3.utils.toWei(price, "ether");
-        await contract.methods
-          .addScholarship(
-            recipientId,
-            recipientName,
-            grantName,
-            grantAmount,
-            grantDate,
-            approver,
-            state
-          )
-          .send({ from: currentAccount, value: priceInWei });
-        alert("Transaction successful!");
-      } catch (error) {
-        console.error("Error submitting transaction:", error);
-        alert("Transaction failed.");
-      }
-    });
 
-    $("#listScholarship").click(function () {
-      // สร้าง Web3 instance และเชื่อมต่อกับ Ethereum node
-      const web3 = new Web3(window.ethereum);
-      const contract = new web3.eth.Contract(abi, contractAddress);
+        // เรียกใช้ method getAllScholarships() จาก Smart Contract
+        contract.methods
+          .getAllScholarships()
+          .call()
+          .then((result) => {
+            // result คือข้อมูลทั้งหมดจาก contract
+            const scholarships = result; // ข้อมูลทุนการศึกษาทั้งหมด
+            const reservationsBody =
+              document.getElementById("reservationsBody");
 
-      // เรียกใช้ method getAllScholarships() จาก Smart Contract
-      contract.methods
-        .getAllScholarships()
-        .call()
-        .then((result) => {
-          // result คือข้อมูลทั้งหมดจาก contract
-          const scholarships = result; // ข้อมูลทุนการศึกษาทั้งหมด
-          const reservationsBody =
-            document.getElementById("reservationsBody");
+            console.log("scholarships: ", scholarships);
 
-          console.log("scholarships: ", scholarships);
-
-          let html = "";
-          scholarships.forEach((scholarship) => {
-            const date = new Date(scholarship.grantDate);
-            html += `
+            let html = "";
+            scholarships.forEach((scholarship) => {
+              const date = new Date(scholarship.grantDate);
+              html += `
                     <tr>
                         <td>${scholarship.recipientId}</td>
                         <td>${scholarship.recipientName}</td>
                         <td>${scholarship.grantName}</td>
                         <td>${scholarship.grantAmount}</td>
                         <td>${scholarship.grantDate}</td>
-                        <td>${scholarship.approver}</td>
+                        <td>${scholarship.approver} (${scholarship.from})</td>
                         <td>${scholarship.state}</td>
                     </tr>
                 `;
-          });
-
-          reservationsBody.innerHTML = html;
-        })
-        .catch((error) => {
-          console.error("Error loading scholarships:", error);
-        });
-    });
-
-    $("#searchBtn").click(function () {
-      const recipientId = document.getElementById("searchRecipientId").value;
-
-      if (recipientId.trim() !== "") {
-        // ค้นหาตาม recipientId
-        const web3 = new Web3(window.ethereum);
-        const contract = new web3.eth.Contract(abi, contractAddress);
-
-        contract.methods
-          .getScholarship(recipientId)
-          .call()
-          .then((result) => {
-            const scholarships = [result]; // ผลลัพธ์ที่ค้นพบ
-            const reservationsBody =
-              document.getElementById("reservationsBody");
-
-            let html = "";
-            scholarships.forEach((scholarship) => {
-              const date = new Date(scholarship.grantDate);
-              html += `
-            <tr>
-                <td>${scholarship.recipientId}</td>
-                <td>${scholarship.recipientName}</td>
-                <td>${scholarship.grantName}</td>
-                <td>${scholarship.grantAmount}</td>
-                <td>${scholarship.grantDate}</td>
-                <td>${scholarship.approver}</td>
-                <td>${scholarship.state}</td>
-                <td>${scholarship.from}</td>
-            </tr>
-          `;
-            });
-
-            reservationsBody.innerHTML = html;
-          })
-          .catch((error) => {
-            console.error("Error loading scholarship:", error);
-            alert("Scholarship not found.");
-          });
-      } else {
-        // ถ้าไม่ได้กรอก recipientId ให้แสดงรายการทั้งหมด
-        const web3 = new Web3(window.ethereum);
-        const contract = new web3.eth.Contract(abi, contractAddress);
-
-        contract.methods
-          .getAllScholarships()
-          .call()
-          .then((result) => {
-            const scholarships = result; // ข้อมูลทุนการศึกษาทั้งหมด
-            const reservationsBody =
-              document.getElementById("reservationsBody");
-
-            let html = "";
-            scholarships.forEach((scholarship) => {
-              const date = new Date(scholarship.grantDate);
-              html += `
-            <tr>
-                <td>${scholarship.recipientId}</td>
-                <td>${scholarship.recipientName}</td>
-                <td>${scholarship.grantName}</td>
-                <td>${scholarship.grantAmount}</td>
-                <td>${scholarship.grantDate}</td>
-                <td>${scholarship.approver}</td>
-                <td>${scholarship.state}</td>
-                <td>${scholarship.from}</td>
-            </tr>
-          `;
             });
 
             reservationsBody.innerHTML = html;
           })
           .catch((error) => {
             console.error("Error loading scholarships:", error);
-            alert("Failed to load scholarships.");
           });
-      }
-    });
+      });
 
-    load();
-  </script>
-</body>
+      $("#searchBtn").click(function () {
+        const recipientId = document.getElementById("searchRecipientId").value;
 
+        if (recipientId.trim() !== "") {
+          // ค้นหาตาม recipientId
+          const web3 = new Web3(window.ethereum);
+          const contract = new web3.eth.Contract(abi, contractAddress);
+
+          contract.methods
+            .getScholarship(recipientId)
+            .call()
+            .then((result) => {
+              const scholarships = [result]; // ผลลัพธ์ที่ค้นพบ
+              const reservationsBody =
+                document.getElementById("reservationsBody");
+
+              let html = "";
+              scholarships.forEach((scholarship) => {
+                const date = new Date(scholarship.grantDate);
+                html += `
+            <tr>
+                <td>${scholarship.recipientId}</td>
+                <td>${scholarship.recipientName}</td>
+                <td>${scholarship.grantName}</td>
+                <td>${scholarship.grantAmount}</td>
+                <td>${scholarship.grantDate}</td>
+                <td>${scholarship.approver}</td>
+                <td>${scholarship.state}</td>
+                <td>${scholarship.from}</td>
+            </tr>
+          `;
+              });
+
+              reservationsBody.innerHTML = html;
+            })
+            .catch((error) => {
+              console.error("Error loading scholarship:", error);
+              alert("Scholarship not found.");
+            });
+        } else {
+          // ถ้าไม่ได้กรอก recipientId ให้แสดงรายการทั้งหมด
+          const web3 = new Web3(window.ethereum);
+          const contract = new web3.eth.Contract(abi, contractAddress);
+
+          contract.methods
+            .getAllScholarships()
+            .call()
+            .then((result) => {
+              const scholarships = result; // ข้อมูลทุนการศึกษาทั้งหมด
+              const reservationsBody =
+                document.getElementById("reservationsBody");
+
+              let html = "";
+              scholarships.forEach((scholarship) => {
+                const date = new Date(scholarship.grantDate);
+                html += `
+            <tr>
+                <td>${scholarship.recipientId}</td>
+                <td>${scholarship.recipientName}</td>
+                <td>${scholarship.grantName}</td>
+                <td>${scholarship.grantAmount}</td>
+                <td>${scholarship.grantDate}</td>
+                <td>${scholarship.approver}</td>
+                <td>${scholarship.state}</td>
+                <td>${scholarship.from}</td>
+            </tr>
+          `;
+              });
+
+              reservationsBody.innerHTML = html;
+            })
+            .catch((error) => {
+              console.error("Error loading scholarships:", error);
+              alert("Failed to load scholarships.");
+            });
+        }
+      });
+
+      load();
+    </script>
+  </body>
 </html>
