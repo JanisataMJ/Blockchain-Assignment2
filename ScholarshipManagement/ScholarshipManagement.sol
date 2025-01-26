@@ -2,7 +2,7 @@
 pragma solidity ^0.8.1;
 
 contract ScholarshipManagement {
-    // โครงสร้างข้อมูลการจอง
+    // โครงสร้างข้อมูลทุนการศึกษา
     struct Manage {
         address from;
         string recipientId;
@@ -14,9 +14,10 @@ contract ScholarshipManagement {
         string state;
     }
 
-    Manage[] public scholarships;
+    Manage[] public scholarships; // เก็บข้อมูลทุนการศึกษาทั้งหมด
     mapping(uint256 => Manage) public addScholarships; // เก็บข้อมูลทุนการศึกษาตาม scholarshipId
     mapping(address => uint256[]) public historyScholarship; // เก็บประวัติทุนการศึกษาของผู้ใช้งาน
+    mapping(string => Manage) private scholarshipsByRecipient; // เก็บข้อมูลทุนตาม recipientId เพื่อการค้นหาที่รวดเร็ว
 
     uint256 public nextScholarshipId = 1; // ตัวนับสำหรับ scholarshipId
     address public owner;
@@ -32,8 +33,6 @@ contract ScholarshipManagement {
         string state
     );
 
-    event ScholarshipError(address from, string recipientId, string reason);
-
     constructor() {
         owner = msg.sender; // กำหนด owner ของ contract
     }
@@ -48,7 +47,7 @@ contract ScholarshipManagement {
         string memory approver,
         string memory state
     ) public payable {
-        require(msg.value == 0.000001 ether, "Incorrect payment amount");
+        require(msg.value >= 0.000001 ether, "Incorrect payment amount"); // ตรวจสอบจำนวนเงินที่ส่งมา
 
         uint256 scholarshipId = nextScholarshipId++;
 
@@ -64,10 +63,13 @@ contract ScholarshipManagement {
             state: state
         });
 
+        // บันทึกข้อมูล
         scholarships.push(newScholarship);
         addScholarships[scholarshipId] = newScholarship;
         historyScholarship[msg.sender].push(scholarshipId);
+        scholarshipsByRecipient[recipientId] = newScholarship;
 
+        // Emit event
         emit ScholarshipAdded(
             msg.sender,
             recipientId,
@@ -86,17 +88,10 @@ contract ScholarshipManagement {
         view
         returns (Manage memory)
     {
-        for (uint256 i = 0; i < scholarships.length; i++) {
-            // เปลี่ยน string i เป็น uint i
-            if (
-                keccak256(abi.encodePacked(scholarships[i].recipientId)) ==
-                keccak256(abi.encodePacked(recipientId))
-            ) {
-                // ใช้ keccak256 และ abi.encodePacked เพื่อเปรียบเทียบ string
-                return scholarships[i];
-            }
-        }
-        revert("Scholarship not found");
+        // ดึงข้อมูลจาก mapping
+        Manage memory scholarship = scholarshipsByRecipient[recipientId];
+        require(scholarship.from != address(0), "Scholarship not found"); // ตรวจสอบว่าข้อมูลมีอยู่หรือไม่
+        return scholarship;
     }
 
     // จำนวนทุนการศึกษาทั้งหมด
