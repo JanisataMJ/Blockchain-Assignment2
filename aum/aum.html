@@ -13,14 +13,14 @@
 
   <body>
     <!-- <div class="status" id="status">กำลังโหลด...</div> -->
-    <h1 style="margin-top: 0px;">Scholarship Management</h1>
-  
+    <h1 style="margin-top: 0px">Scholarship Management</h1>
+
     <div class="container">
       <!-- Navigation buttons -->
       <div class="nav">
         <button
           class="nav-btn active"
-          style="font-family: 'Itim', cursive; font-size: 16px;"
+          style="font-family: 'Itim', cursive; font-size: 16px"
           onclick="showPage('transactions', event)"
         >
           Add Transaction
@@ -28,7 +28,7 @@
         <button
           id="listScholarship"
           class="nav-btn"
-          style="font-family: 'Itim', cursive; font-size: 16px;"
+          style="font-family: 'Itim', cursive; font-size: 16px"
           onclick="showPage('list', event)"
         >
           Scholarship Recipients List
@@ -38,7 +38,7 @@
       <!-- Transactions Page -->
       <div id="transactions" class="page active form-container">
         <form onsubmit="return false;">
-          <h2 style="margin-top: 5px;">Scholarship Transaction</h2>
+          <h2 style="margin-top: 5px">Scholarship Transaction</h2>
 
           <label for="recipientId">Recipient ID :</label>
           <input
@@ -123,26 +123,26 @@
             <option value="Rejected">Rejected</option>
           </select>
 
-          <button type="submit" id="btnsubmitTransaction">
-            Submit
-          </button>
+          <button type="submit" id="btnsubmitTransaction">Submit</button>
         </form>
       </div>
 
       <!-- Recipients List Page -->
       <div id="list" class="page">
         <h2>Scholarship Recipients List</h2>
-        <div style="display: flex;">
-          <label for="searchRecipientId" style="font-size: 16px; font-weight: normal;">Recipient ID:</label>
+        <div style="display: flex">
+          <label
+            for="searchRecipientId"
+            style="font-size: 16px; font-weight: normal"
+            >Recipient ID:</label
+          >
           <input
             type="text"
             id="searchRecipientId"
             placeholder="Enter Recipient ID"
             style="font-family: 'Itim', cursive"
           />
-          <button id="searchBtn">
-            Search
-          </button>
+          <button id="searchBtn">Search</button>
         </div>
         <div class="list-grid"></div>
         <table>
@@ -163,7 +163,6 @@
         </table>
       </div>
     </div>
-    
 
     <script>
       // Show specific page by its ID
@@ -763,7 +762,7 @@
                         <td>${scholarship.grantName}</td>
                         <td>${scholarship.grantAmount}</td>
                         <td>${scholarship.grantDate}</td>
-                        <td>${scholarship.approver}</td>
+                        <td>${scholarship.approver} (${scholarship.from})</td>
                         <td>${scholarship.state}</td>
                     </tr>
                 `;
@@ -804,6 +803,7 @@
                 <td>${scholarship.grantDate}</td>
                 <td>${scholarship.approver}</td>
                 <td>${scholarship.state}</td>
+                <td>${scholarship.from}</td>
             </tr>
           `;
               });
@@ -839,6 +839,7 @@
                 <td>${scholarship.grantDate}</td>
                 <td>${scholarship.approver}</td>
                 <td>${scholarship.state}</td>
+                <td>${scholarship.from}</td>
             </tr>
           `;
               });
