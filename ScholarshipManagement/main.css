@@ -1,174 +1,182 @@
 body {
-    font-family: 'Itim', cursive;
-    background-color: #f4f4f4;
-    padding: 30px;
+  font-family: "Itim", cursive;
+  background-color: #f4f4f4;
+  padding: 30px;
 }
 
 form {
-    background: white; 
-    padding: 20px; 
-    border-radius: 8px;
-    max-width: 100vw;
-    margin: auto;
-    box-shadow: 0px 0px 10px #ccc;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 100vw;
+  margin: auto;
+  box-shadow: 0px 0px 10px #ccc;
 }
 
 label {
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
 }
 
-input, select {
-    width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-sizing: border-box;
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  box-sizing: border-box;
 }
 
 button {
-    background-color: #28a745;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 10px;
-    width: 100%;
+  background-color: #28a745;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
 }
 
 button:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .go-next-btn {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 4px;
-    text-decoration: none;
-    margin-bottom: 20px; 
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  margin-bottom: 20px;
 }
 
 .go-next-btn:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
-
-
 .container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }
 
 .nav {
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
 .nav-btn {
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin: 5px 0;
-    width: 150px;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 5px 0;
+  width: 150px;
 }
 
 .nav-btn.active {
-    background-color: #45a049;
+  background-color: #45a049;
 }
 
 .form-container {
-    width: 100%;
+  width: 100%;
 }
 
 .list-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
 }
-
 
 .page {
-    display: none;
+  display: none;
 }
-   
+
 .page.active {
-    display: block;
+  display: block;
 }
 
 table {
-    max-width: 100%;
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    box-shadow: 0px 0px 10px #ccc;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: auto;
+  max-width: 100%;
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0px 0px 10px #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: auto;
 }
 
-th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-    font-size: 20px;
-    font-weight: normal;
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  font-size: 20px;
+  font-weight: normal;
 }
 
 th {
-    background-color: #4CAF50;
-    color: white;
+  background-color: #4caf50;
+  color: white;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 #searchBtn {
-    font-family: 'Itim', cursive;
-    font-size: 16px; 
-    padding: 10px 20px; 
-    border-radius: 5px; 
-    background-color: #28a745; 
-    color: white;
-    border: none; 
-    cursor: pointer; 
-    width: auto; 
-    min-width: 100px; 
-    margin-left: 10px;
+  font-family: "Itim", cursive;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: auto;
+  min-width: 100px;
+  margin-left: 10px;
 }
 
 #searchBtn:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
-
 #btnsubmitTransaction {
-    font-family: 'Itim', cursive;
-    font-size: 16px;
-    padding: 10px 30px; 
-    border-radius: 5px; 
-    background-color: #28a745; 
-    color: white; 
-    border: none;
-    cursor: pointer; 
-    width: auto; 
-    min-width: 150px;
-    display: block; 
-    margin: 0 auto; 
-    margin-top: 20px;
+  font-family: "Itim", cursive;
+  font-size: 16px;
+  padding: 10px 30px;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: auto;
+  min-width: 150px;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
 }
 
 #btnsubmitTransaction:hover {
-    background-color: #218838; 
+  background-color: #218838;
+}
+
+.status {
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  background-color: #e6f9f1;
+  text-align: center;
+  color: #004d26;
+  margin-bottom: 20px;
 }

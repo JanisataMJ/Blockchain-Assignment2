@@ -12,10 +12,11 @@
   </head>
 
   <body>
-    <!-- <div class="status" id="status">กำลังโหลด...</div> -->
+    <!-- <div class="state" id="state">กำลังโหลด...</div> -->
     <h1 style="margin-top: 0px">Scholarship Management</h1>
 
     <div class="container">
+      <div class="status" id="status">กำลังโหลด...</div>
       <!-- Navigation buttons -->
       <div class="nav">
         <button
@@ -37,7 +38,7 @@
 
       <!-- Transactions Page -->
       <div id="transactions" class="page active form-container">
-        <form onsubmit="return false;">
+        <form id="form" onsubmit="return false;">
           <h2 style="margin-top: 5px">Scholarship Transaction</h2>
 
           <label for="recipientId">Recipient ID :</label>
@@ -183,10 +184,13 @@
         document
           .getElementById("btnsubmitTransaction")
           .addEventListener("click", function (event) {
-            event.preventDefault();
-            // เพิ่มฟังก์ชันจัดการข้อมูลที่นี่ เช่น ส่งค่าผ่าน API
-            window.location.reload();
-            //console.log("Form submitted without reloading.");
+            event.preventDefault(); // หยุดการส่งฟอร์ม (ถ้ามี)
+
+            // ทำการส่งข้อมูลที่ต้องการ เช่น ผ่าน API หรืออะไรก็ตาม
+            submitTransaction();
+
+            // รีเซ็ตฟอร์ม
+            document.getElementById("form").reset(); // ให้แทนที่ "yourFormID" ด้วย ID ของฟอร์มที่ต้องการรีเซ็ต
           });
 
         document.getElementById("listScholarship");
@@ -260,397 +264,397 @@
       let contract = null;
       const contractAddress = "0x84fe234Af6b3cCDc4074B316dB8967D3a006c6fa"; // ใส่ Contract Address ที่คุณต้องการ
       const abi = [
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "recipientId",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "recipientName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "grantName",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "grantAmount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "grantDate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "approver",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "state",
-				"type": "string"
-			}
-		],
-		"name": "addScholarship",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "recipientId",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "recipientName",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "grantName",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "grantAmount",
-				"type": "uint256"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "grantDate",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "approver",
-				"type": "string"
-			},
-			{
-				"indexed": false,
-				"internalType": "string",
-				"name": "state",
-				"type": "string"
-			}
-		],
-		"name": "ScholarshipAdded",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "addScholarships",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "recipientId",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "recipientName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "grantName",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "grantAmount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "grantDate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "approver",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "state",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getAllScholarships",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "recipientId",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "recipientName",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "grantName",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "grantAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "grantDate",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "approver",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "state",
-						"type": "string"
-					}
-				],
-				"internalType": "struct ScholarshipManagement.Manage[]",
-				"name": "",
-				"type": "tuple[]"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "recipientId",
-				"type": "string"
-			}
-		],
-		"name": "getScholarship",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "from",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "recipientId",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "recipientName",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "grantName",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "grantAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "grantDate",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "approver",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "state",
-						"type": "string"
-					}
-				],
-				"internalType": "struct ScholarshipManagement.Manage",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getTotalScholarships",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "historyScholarship",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "nextScholarshipId",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "scholarships",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "recipientId",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "recipientName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "grantName",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "grantAmount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "grantDate",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "approver",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "state",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "recipientId",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "recipientName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "grantName",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "grantAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "grantDate",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "approver",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "state",
+              type: "string",
+            },
+          ],
+          name: "addScholarship",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
+          inputs: [],
+          stateMutability: "nonpayable",
+          type: "constructor",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "recipientId",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "recipientName",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "grantName",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "grantAmount",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "grantDate",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "approver",
+              type: "string",
+            },
+            {
+              indexed: false,
+              internalType: "string",
+              name: "state",
+              type: "string",
+            },
+          ],
+          name: "ScholarshipAdded",
+          type: "event",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "addScholarships",
+          outputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "recipientId",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "recipientName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "grantName",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "grantAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "grantDate",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "approver",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "state",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getAllScholarships",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "recipientId",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "recipientName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "grantName",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "grantAmount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "grantDate",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "approver",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "state",
+                  type: "string",
+                },
+              ],
+              internalType: "struct ScholarshipManagement.Manage[]",
+              name: "",
+              type: "tuple[]",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "string",
+              name: "recipientId",
+              type: "string",
+            },
+          ],
+          name: "getScholarship",
+          outputs: [
+            {
+              components: [
+                {
+                  internalType: "address",
+                  name: "from",
+                  type: "address",
+                },
+                {
+                  internalType: "string",
+                  name: "recipientId",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "recipientName",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "grantName",
+                  type: "string",
+                },
+                {
+                  internalType: "uint256",
+                  name: "grantAmount",
+                  type: "uint256",
+                },
+                {
+                  internalType: "string",
+                  name: "grantDate",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "approver",
+                  type: "string",
+                },
+                {
+                  internalType: "string",
+                  name: "state",
+                  type: "string",
+                },
+              ],
+              internalType: "struct ScholarshipManagement.Manage",
+              name: "",
+              type: "tuple",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "getTotalScholarships",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "historyScholarship",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "nextScholarshipId",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "owner",
+          outputs: [
+            {
+              internalType: "address",
+              name: "",
+              type: "address",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          name: "scholarships",
+          outputs: [
+            {
+              internalType: "address",
+              name: "from",
+              type: "address",
+            },
+            {
+              internalType: "string",
+              name: "recipientId",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "recipientName",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "grantName",
+              type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "grantAmount",
+              type: "uint256",
+            },
+            {
+              internalType: "string",
+              name: "grantDate",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "approver",
+              type: "string",
+            },
+            {
+              internalType: "string",
+              name: "state",
+              type: "string",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      ];
 
       function loadContract() {
         if (web3) {
@@ -667,19 +671,20 @@
         updateStatus("Ready!");
       }
 
-      function updateStatus(state) {
-        const statusEl = document.getElementById("state");
-        statusEl.innerHTML = state;
-        console.log(state);
+      function updateStatus(status) {
+        const statusEl = document.getElementById("status");
+        statusEl.innerHTML = status;
+        console.log(status);
       }
 
       // Event ของปุ่ม Submit
-      $("#btnsubmitTransaction").click(async function () {
+      async function submitTransaction() {
         if (!currentAccount) {
           updateStatus("กรุณาเชื่อมต่อกระเป๋าเงินก่อน");
           return;
         }
 
+        console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         const recipientId = $("#recipientId").val();
         const recipientName = $("#recipientName").val();
         const grantName = $("#grantName").val();
@@ -708,7 +713,7 @@
           console.error("Error submitting transaction:", error);
           alert("Transaction failed.");
         }
-      });
+      }
 
       $("#listScholarship").click(function () {
         // สร้าง Web3 instance และเชื่อมต่อกับ Ethereum node
@@ -731,16 +736,16 @@
             scholarships.forEach((scholarship) => {
               const date = new Date(scholarship.grantDate);
               html += `
-                    <tr>
-                        <td>${scholarship.recipientId}</td>
-                        <td>${scholarship.recipientName}</td>
-                        <td>${scholarship.grantName}</td>
-                        <td>${scholarship.grantAmount}</td>
-                        <td>${scholarship.grantDate}</td>
-                        <td>${scholarship.approver} (${scholarship.from})</td>
-                        <td>${scholarship.state}</td>
-                    </tr>
-                `;
+                        <tr>
+                            <td>${scholarship.recipientId}</td>
+                            <td>${scholarship.recipientName}</td>
+                            <td>${scholarship.grantName}</td>
+                            <td>${scholarship.grantAmount}</td>
+                            <td>${scholarship.grantDate}</td>
+                            <td>${scholarship.approver} (${scholarship.from})</td>
+                            <td>${scholarship.state}</td>
+                        </tr>
+                    `;
             });
 
             reservationsBody.innerHTML = html;
@@ -770,17 +775,17 @@
               scholarships.forEach((scholarship) => {
                 const date = new Date(scholarship.grantDate);
                 html += `
-            <tr>
-                <td>${scholarship.recipientId}</td>
-                <td>${scholarship.recipientName}</td>
-                <td>${scholarship.grantName}</td>
-                <td>${scholarship.grantAmount}</td>
-                <td>${scholarship.grantDate}</td>
-                <td>${scholarship.approver}</td>
-                <td>${scholarship.state}</td>
-                <td>${scholarship.from}</td>
-            </tr>
-          `;
+                <tr>
+                    <td>${scholarship.recipientId}</td>
+                    <td>${scholarship.recipientName}</td>
+                    <td>${scholarship.grantName}</td>
+                    <td>${scholarship.grantAmount}</td>
+                    <td>${scholarship.grantDate}</td>
+                    <td>${scholarship.approver}</td>
+                    <td>${scholarship.state}</td>
+                    <td>${scholarship.from}</td>
+                </tr>
+              `;
               });
 
               reservationsBody.innerHTML = html;
@@ -806,17 +811,17 @@
               scholarships.forEach((scholarship) => {
                 const date = new Date(scholarship.grantDate);
                 html += `
-            <tr>
-                <td>${scholarship.recipientId}</td>
-                <td>${scholarship.recipientName}</td>
-                <td>${scholarship.grantName}</td>
-                <td>${scholarship.grantAmount}</td>
-                <td>${scholarship.grantDate}</td>
-                <td>${scholarship.approver}</td>
-                <td>${scholarship.state}</td>
-                <td>${scholarship.from}</td>
-            </tr>
-          `;
+                <tr>
+                    <td>${scholarship.recipientId}</td>
+                    <td>${scholarship.recipientName}</td>
+                    <td>${scholarship.grantName}</td>
+                    <td>${scholarship.grantAmount}</td>
+                    <td>${scholarship.grantDate}</td>
+                    <td>${scholarship.approver}</td>
+                    <td>${scholarship.state}</td>
+                    <td>${scholarship.from}</td>
+                </tr>
+              `;
               });
 
               reservationsBody.innerHTML = html;
